@@ -1,0 +1,10 @@
+.gitignore
+.dockerignore
+.git
+Dockerfile
+ReadMe.md
+run_docker.sh
+
+**/*.xlsx
+**/*.zip
+listy_zadan/
