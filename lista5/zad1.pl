@@ -3,7 +3,7 @@ tokens(['read', 'write', 'if', 'then', 'else', 'fi', 'while', 'do', 'od', 'and',
 separators([';', '+', '-', '*', '/', '(', ')', '<', '>', '=<', '>=', ':=', '=', '/=']).
 
 % Shortcut for scanning file from path and writing tokens to stdout
-scan_file(Path) :- open(Path, read, X), scanner(X, Y), close(X), write(Y).
+tokenize_file(Path, Tokenized) :- open(Path, read, X), scanner(X, Tokenized), close(X).
 
 % Main predicate
 scanner(Stream, Tokens) :-
@@ -38,8 +38,12 @@ scanner(Stream, Char, [Token|Tokens]) :-
 % Case: digit
 scanner(Stream, Char, [Token|Tokens]) :-
 	char_type(Char, digit), !,
-	read_number(Stream, Char, Number),
-	Token = int(Number),
+	read_number(Stream, Char, NumberString),
+	(
+		atom_number(NumberString, Number), integer(Number), Number >= 0
+	->	Token = int(Number)
+	;	Token = error_int(NumberString)
+	),
 	get_char(Stream, NextChar),
 	scanner(Stream, NextChar, Tokens).
 
