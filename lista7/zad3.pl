@@ -1,0 +1,30 @@
+filozofowie() :-
+    mutex_create(widelec1),
+    mutex_create(widelec2),
+    mutex_create(widelec3),
+    mutex_create(widelec4),
+    mutex_create(widelec5),
+    thread_create(filozof(1, widelec1, widelec2), _, [detached(true)]),
+    thread_create(filozof(2, widelec2, widelec3), _, [detached(true)]),
+    thread_create(filozof(3, widelec3, widelec4), _, [detached(true)]),
+    thread_create(filozof(4, widelec4, widelec5), _, [detached(true)]),
+    thread_create(filozof(5, widelec5, widelec1), _, [detached(true)]).
+
+filozof(ID, L, P) :-
+    random(R1),
+    R is R1 / 200,
+    sleep(R),
+    N is ID - 1,
+    format('~|~t~*c[~w] mysli~n', [N, 32, ID]),
+    format('~|~t~*c[~w] chce prawy widelec~n', [N, 32, ID]),
+    mutex_lock(P),
+    format('~|~t~*c[~w] podniosl prawy widelec~n', [N, 32, ID]),
+    format('~|~t~*c[~w] chce lewy widelec~n', [N, 32, ID]),
+    mutex_lock(L),
+    format('~|~t~*c[~w] podniosl lewy widelec~n', [N, 32, ID]),
+    format('~|~t~*c[~w] je~n', [N, 32, ID]),
+    format('~|~t~*c[~w] odklada prawy widelec~n', [N, 32, ID]),
+    mutex_unlock(P),
+    format('~|~t~*c[~w] odklada lewy widelec~n', [N, 32, ID]),
+    mutex_unlock(L),
+    filozof(ID, L, P).
