@@ -15,3 +15,5 @@ Adrian Herda
 * [<b>Lista 5</b>](listy_zadan/lista5.pdf)
 * [<b>Lista 6</b>](listy_zadan/lista6.pdf)
 * [<b>Lista 7</b>](listy_zadan/lista7.pdf)
+* [<b>Lista 8</b>](listy_zadan/lista8.pdf)
+* [<b>Lista 9</b>](listy_zadan/lista9.pdf)
